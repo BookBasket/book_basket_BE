@@ -4,6 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 import os
 import graphene
 from graphene_sqlalchemy import SQLAlchemyObjectType, SQLAlchemyConnectionField
+import requests
 
 # app initialization
 app = Flask(__name__)
