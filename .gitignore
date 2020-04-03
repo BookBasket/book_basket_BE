@@ -1,0 +1,11 @@
+# vs cdoe settings
+.vscode
+
+# env settings
+env
+
+# dot env
+.env
+
+# pycache
+*.pyc
