@@ -6,10 +6,10 @@ class Book(db.Model):
 	__tablename__ = 'books'
 
 	id = db.Column(db.Integer, primary_key = True)
-	name = db.Column(db.String())
+	title = db.Column(db.String())
 
-	def __init__(self, name):
-		self.name = name
+	def __init__(self, title):
+		self.title = title
 
 	def __repr__(self):
 		return '<id {}>'.format(self.id)

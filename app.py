@@ -20,7 +20,7 @@ db = SQLAlchemy(app)
 from models import Book
 
 # Schema Objects
-from schema_objects import BookObject
+# from schema_objects import BookObject
 
 # Routes
 # TO-DO
