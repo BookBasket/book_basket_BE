@@ -1,6 +1,16 @@
+Requirements
+- Python 3.7.7
+- PSQL 11.5
+
+Clone Repository
+```
+git clone git@github.com:BookBasket/book_basket_BE.git
+cd book_basket_BE
+```
+
 Create/Activate Virtual Environment
 ```
-$ venv env --python=python3.7.7
+$ python3 -m venv env
 $ source env/bin/activate
 ```
 
