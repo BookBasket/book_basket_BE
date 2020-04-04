@@ -30,6 +30,7 @@ class Author(db.Model):
 	def __repr__(self):
 		return '<id {}>'.format(self.id)
 
+
 class Genre(db.Model):
 	__tablename__ = 'genres'
 
@@ -41,6 +42,7 @@ class Genre(db.Model):
 
 	def __repr__(self):
 		return '<id {}>'.format(self.id)
+
 
 class Shelf(db.Model):
 	__tablename__ = 'shelves'
@@ -54,15 +56,18 @@ class Shelf(db.Model):
 	def __repr__(self):
 		return '<id {}>'.format(self.id)
 
+
 book_authors = db.Table('book_authors',
 			db.Column('book_id', db.Integer, db.ForeignKey('books.id')),
 			db.Column('author_id', db.Integer, db.ForeignKey('authors.id'))
 			)
 
+
 book_genres = db.Table('book_genres',
 			db.Column('book_id', db.Integer, db.ForeignKey('books.id')),
 			db.Column('genre_id', db.Integer, db.ForeignKey('genres.id'))
 			)
+
 
 book_shelves = db.Table('book_shelves',
 			db.Column('book_id', db.Integer, db.ForeignKey('books.id')),

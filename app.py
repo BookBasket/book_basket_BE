@@ -1,10 +1,11 @@
-# Imports
+# Dependencies
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
 import os
+from flask_sqlalchemy import SQLAlchemy
 import graphene
 from graphene_sqlalchemy import SQLAlchemyObjectType, SQLAlchemyConnectionField
 import requests
+from flask_seeder import FlaskSeeder
 
 # app initialization
 app = Flask(__name__)
@@ -15,6 +16,8 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 
 # Modules
 db = SQLAlchemy(app)
+seeder = FlaskSeeder()
+seeder.init_app(app, db)
 
 # Models
 from models import Book
@@ -23,7 +26,6 @@ from models import Book
 # from schema_objects import BookObject
 
 # Routes
-# TO-DO
 @app.route('/')
 def index():
     return 'Hello World'
