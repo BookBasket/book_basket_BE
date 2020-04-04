@@ -26,3 +26,16 @@ class Author(db.Model):
 
 	def __repr__(self):
 		return '<id {}>'.format(self.id)
+
+class Genre(db.Model):
+	__tablename__ = 'genres'
+
+	id = db.Column(db.Integer, primary_key = True)
+	type = db.Column(db.String())
+
+	def __init__(self, type):
+		self.type = type
+
+	def __repr__(self):
+		return '<id {}>'.format(self.id)
+
