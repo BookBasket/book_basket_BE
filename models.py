@@ -58,21 +58,18 @@ class Shelf(db.Model):
 
 
 book_authors = db.Table('book_authors',
-			db.Column('id', db.Integer, primary_key = True),
 			db.Column('book_id', db.Integer, db.ForeignKey('books.id')),
 			db.Column('author_id', db.Integer, db.ForeignKey('authors.id'))
 			)
 
 
 book_genres = db.Table('book_genres',
-			db.Column('id', db.Integer, primary_key = True),
 			db.Column('book_id', db.Integer, db.ForeignKey('books.id')),
 			db.Column('genre_id', db.Integer, db.ForeignKey('genres.id'))
 			)
 
 
 book_shelves = db.Table('book_shelves',
-			db.Column('id', db.Integer, primary_key = True),
 			db.Column('book_id', db.Integer, db.ForeignKey('books.id')),
 			db.Column('shelf_id', db.Integer, db.ForeignKey('shelves.id'))
 			)
