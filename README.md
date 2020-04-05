@@ -4,16 +4,12 @@ Requirements
 
 Clone Repository
 ```
-git clone git@github.com:BookBasket/book_basket_BE.git
-```
-
-Navgiate to Repository
-```
-cd book_basket_BE
+$ git clone git@github.com:BookBasket/book_basket_BE.git
 ```
 
 Create/Activate Virtual Environment
 ```
+$ cd book_basket_BE
 $ python3 -m venv env
 $ source env/bin/activate
 ```
