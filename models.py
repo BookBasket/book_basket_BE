@@ -15,7 +15,7 @@ class Book(db.Model):
 		self.title = title
 
 	def __repr__(self):
-		return '<id {}>'.format(self.id)
+		return f'<Book(id: {self.id}, title: {self.title})>'
 
 
 class Author(db.Model):
@@ -28,7 +28,7 @@ class Author(db.Model):
 		self.name = name
 
 	def __repr__(self):
-		return '<id {}>'.format(self.id)
+		return f'<Author(id: {self.id}, name: {self.name})>'
 
 
 class Genre(db.Model):
@@ -41,7 +41,7 @@ class Genre(db.Model):
 		self.type = type
 
 	def __repr__(self):
-		return '<id {}>'.format(self.id)
+		return f'<Genre(id: {self.id}, type: {self.type})>'
 
 
 class Shelf(db.Model):
@@ -54,22 +54,25 @@ class Shelf(db.Model):
 		self.type = type
 
 	def __repr__(self):
-		return '<id {}>'.format(self.id)
+		return f'<Shelf(id: {self.id}, type: {self.type})>'
 
 
 book_authors = db.Table('book_authors',
+			db.Column('id', db.Integer, primary_key = True),
 			db.Column('book_id', db.Integer, db.ForeignKey('books.id')),
 			db.Column('author_id', db.Integer, db.ForeignKey('authors.id'))
 			)
 
 
 book_genres = db.Table('book_genres',
+			db.Column('id', db.Integer, primary_key = True),
 			db.Column('book_id', db.Integer, db.ForeignKey('books.id')),
 			db.Column('genre_id', db.Integer, db.ForeignKey('genres.id'))
 			)
 
 
 book_shelves = db.Table('book_shelves',
+			db.Column('id', db.Integer, primary_key = True),
 			db.Column('book_id', db.Integer, db.ForeignKey('books.id')),
 			db.Column('shelf_id', db.Integer, db.ForeignKey('shelves.id'))
 			)

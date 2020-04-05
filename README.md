@@ -5,6 +5,10 @@ Requirements
 Clone Repository
 ```
 git clone git@github.com:BookBasket/book_basket_BE.git
+```
+
+Navgiate to Repository
+```
 cd book_basket_BE
 ```
 
@@ -14,7 +18,7 @@ $ python3 -m venv env
 $ source env/bin/activate
 ```
 
-Install Requirements
+Install Dependencies
 ```
 $ pip install -r requirements.txt
 ```
@@ -32,6 +36,5 @@ $ psql
 CREATE DATABASE
 # \q
 
-$ python manage.py db init
-$ python manage.py db migrate
+$ python manage.py db upgrade
 ```

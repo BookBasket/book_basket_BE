@@ -20,7 +20,7 @@ seeder = FlaskSeeder()
 seeder.init_app(app, db)
 
 # Models
-from models import Book
+from models import Book, Author, Genre, Shelf
 
 # Schema Objects
 # from schema_objects import BookObject
