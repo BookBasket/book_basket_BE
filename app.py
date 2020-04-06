@@ -2,10 +2,9 @@
 from flask import Flask
 import os
 from flask_sqlalchemy import SQLAlchemy
-import graphene
-from graphene_sqlalchemy import SQLAlchemyObjectType, SQLAlchemyConnectionField
 import requests
 from flask_seeder import FlaskSeeder
+from flask_graphql import GraphQLView
 
 # app initialization
 app = Flask(__name__)
@@ -20,20 +19,24 @@ seeder = FlaskSeeder()
 seeder.init_app(app, db)
 
 # Models
-from models import Book, Author, Genre, Shelf
+from models import *
 
-# Schema Objects
-# from schema_objects import BookObject
+# Schema
+from schema import *
 
 # Routes
 @app.route('/')
 def index():
-    return 'Hello World'
+    return 'Welcome to Book Basket'
 
-
-@app.route('/<name>')
-def hello_name(name):
-    return "Hello {}!".format(name)
+app.add_url_rule(
+    '/graphql',
+    view_func = GraphQLView.as_view(
+        'graphql',
+        schema = schema,
+        graphiql = True
+    )
+)
 
 if __name__ == '__main__':
      app.run()

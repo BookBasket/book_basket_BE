@@ -7,9 +7,9 @@ class Book(db.Model):
 
 	id = db.Column(db.Integer, primary_key = True)
 	title = db.Column(db.String())
-	authorbooks = db.relationship('Author', secondary='book_authors', backref=db.backref('books'))
-	genrebooks = db.relationship('Genre', secondary='book_genres', backref=db.backref('books'))
-	shelfbooks = db.relationship('Shelf', secondary='book_shelves', backref=db.backref('books'))
+	authors = db.relationship('Author', secondary='book_authors', backref=db.backref('books'))
+	genres = db.relationship('Genre', secondary='book_genres', backref=db.backref('books'))
+	shelves = db.relationship('Shelf', secondary='book_shelves', backref=db.backref('books'))
 
 	def __init__(self, title):
 		self.title = title
