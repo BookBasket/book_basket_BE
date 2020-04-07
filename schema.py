@@ -5,25 +5,25 @@ import graphene
 
 class BookObject(SQLAlchemyObjectType):
 	class Meta:
-		model = Book
+		model = BookModel
 		interfaces = (graphene.relay.Node,)
 
 
 class AuthorObject(SQLAlchemyObjectType):
 	class Meta:
-		model = Author
+		model = AuthorModel
 		interfaces = (graphene.relay.Node,)
 
 
 class GenreObject(SQLAlchemyObjectType):
 	class Meta:
-		model = Genre
+		model = GenreModel
 		interfaces = (graphene.relay.Node,)
 
 
 class ShelfObject(SQLAlchemyObjectType):
 	class Meta:
-		model = Shelf
+		model = ShelfModel
 		interfaces = (graphene.relay.Node,)
 
 

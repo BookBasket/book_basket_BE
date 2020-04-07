@@ -2,14 +2,14 @@ from app import db
 from sqlalchemy.dialects.postgresql import JSON
 
 
-class Book(db.Model):
+class BookModel(db.Model):
 	__tablename__ = 'books'
 
 	id = db.Column(db.Integer, primary_key = True)
 	title = db.Column(db.String())
-	authors = db.relationship('Author', secondary='book_authors', backref=db.backref('books'))
-	genres = db.relationship('Genre', secondary='book_genres', backref=db.backref('books'))
-	shelves = db.relationship('Shelf', secondary='book_shelves', backref=db.backref('books'))
+	authors = db.relationship('AuthorModel', secondary='book_authors', backref=db.backref('books'))
+	genres = db.relationship('GenreModel', secondary='book_genres', backref=db.backref('books'))
+	shelves = db.relationship('ShelfModel', secondary='book_shelves', backref=db.backref('books'))
 
 	def __init__(self, title):
 		self.title = title
@@ -18,7 +18,7 @@ class Book(db.Model):
 		return f'<Book(id: {self.id}, title: {self.title})>'
 
 
-class Author(db.Model):
+class AuthorModel(db.Model):
 	__tablename__ = 'authors'
 
 	id = db.Column(db.Integer, primary_key = True)
@@ -31,7 +31,7 @@ class Author(db.Model):
 		return f'<Author(id: {self.id}, name: {self.name})>'
 
 
-class Genre(db.Model):
+class GenreModel(db.Model):
 	__tablename__ = 'genres'
 
 	id = db.Column(db.Integer, primary_key = True)
@@ -44,7 +44,7 @@ class Genre(db.Model):
 		return f'<Genre(id: {self.id}, type: {self.type})>'
 
 
-class Shelf(db.Model):
+class ShelfModel(db.Model):
 	__tablename__ = 'shelves'
 
 	id = db.Column(db.Integer, primary_key = True)

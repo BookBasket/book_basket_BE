@@ -5,6 +5,7 @@ from flask_sqlalchemy import SQLAlchemy
 import requests
 from flask_seeder import FlaskSeeder
 from flask_graphql import GraphQLView
+import json
 
 # app initialization
 app = Flask(__name__)
