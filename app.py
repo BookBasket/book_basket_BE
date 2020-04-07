@@ -1,5 +1,5 @@
 # Dependencies
-from flask import Flask
+from flask import Flask, jsonify
 import os
 from flask_sqlalchemy import SQLAlchemy
 import requests
@@ -37,6 +37,22 @@ app.add_url_rule(
         graphiql = True
     )
 )
+
+@app.route('/search')
+def search():
+    payload = {'key': 'AIzaSyDy_PYvNB25ePStZ4AgiSd8ZxIGcEpaZ4o', 'q': 'inauthor:george rr martin' }
+    response = requests.get('https://www.googleapis.com/books/v1/volumes', params = payload)
+    json_response = json.loads(response.content)
+    books = json_response['items']
+    book = books[0]
+    return jsonify(
+        title = book['volumeInfo']['title'],
+        author = book['volumeInfo']['authors'],
+        description = book['volumeInfo']['description'],
+        published_date = book['volumeInfo']['publishedDate'],
+        image = book['volumeInfo']['imageLinks']['thumbnail'],
+    )
+
 
 if __name__ == '__main__':
      app.run()
