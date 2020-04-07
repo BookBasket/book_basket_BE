@@ -25,34 +25,54 @@ from models import *
 # Schema
 from schema import *
 
+# POPOs
+from popos import *
+
+# Serializers
+from serializers import *
+
 # Routes
 @app.route('/')
 def index():
     return 'Welcome to Book Basket'
 
-app.add_url_rule(
-    '/graphql',
-    view_func = GraphQLView.as_view(
-        'graphql',
-        schema = schema,
-        graphiql = True
+    app.add_url_rule(
+        '/graphql',
+        view_func = GraphQLView.as_view(
+            'graphql',
+            schema = schema,
+            graphiql = True
+        )
     )
-)
 
 @app.route('/search')
 def search():
-    payload = {'key': 'AIzaSyDy_PYvNB25ePStZ4AgiSd8ZxIGcEpaZ4o', 'q': 'inauthor:george rr martin' }
+    payload = {
+        'key': 'AIzaSyDy_PYvNB25ePStZ4AgiSd8ZxIGcEpaZ4o',
+        'q': 'inauthor:george rr martin',
+        'maxResults': 40
+    }
     response = requests.get('https://www.googleapis.com/books/v1/volumes', params = payload)
     json_response = json.loads(response.content)
     books = json_response['items']
-    book = books[0]
-    return jsonify(
-        title = book['volumeInfo']['title'],
-        author = book['volumeInfo']['authors'],
-        description = book['volumeInfo']['description'],
-        published_date = book['volumeInfo']['publishedDate'],
-        image = book['volumeInfo']['imageLinks']['thumbnail'],
-    )
+    book_collection = []
+    for book in books:
+        book_collection.append(Book(book))
+
+    serializer = BookSerializer(many = True)
+    result = serializer.dump(book_collection)
+    return jsonify(result)
+    # breakpoint()
+
+
+    # book = books[0]
+    # return jsonify(
+    #     title = book['volumeInfo']['title'],
+    #     author = book['volumeInfo']['authors'],
+    #     description = book['volumeInfo']['description'],
+    #     published_date = book['volumeInfo']['publishedDate'],
+    #     image_url = book['volumeInfo']['imageLinks']['thumbnail']
+    # )
 
 
 if __name__ == '__main__':
