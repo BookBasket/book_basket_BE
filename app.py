@@ -28,6 +28,7 @@ seeder.init_app(app, db)
 
 # Schema
 import schema
+from schema import *
 
 # POPOs
 # from popos import *
