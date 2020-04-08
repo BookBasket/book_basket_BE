@@ -50,7 +50,7 @@ class CreateBook(graphene.Mutation):
     book = graphene.Field(lambda: BookObject)
 
     def mutate(self, info, title):
-        book = Book(title=title)
+        book = BookModel(title=title)
         db.session.add(book)
         db.session.commit()
 
@@ -59,5 +59,5 @@ class CreateBook(graphene.Mutation):
 
 class Mutation(graphene.ObjectType):
     create_book = CreateBook.Field()
-	
+
 schema = graphene.Schema(query=Query, mutation=Mutation)
