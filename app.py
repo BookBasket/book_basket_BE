@@ -1,10 +1,15 @@
 # Dependencies
-from flask import Flask
+from flask import Flask, jsonify, request
 import os
 from flask_sqlalchemy import SQLAlchemy
 import requests
 from flask_seeder import FlaskSeeder
 from flask_graphql import GraphQLView
+import json
+
+# dotenv
+from dotenv import load_dotenv
+load_dotenv()
 
 # app initialization
 app = Flask(__name__)
@@ -19,10 +24,19 @@ seeder = FlaskSeeder()
 seeder.init_app(app, db)
 
 # Models
-from models import *
+# from models import *
 
 # Schema
-from schema import *
+import schema
+
+# POPOs
+# from popos import *
+
+# Serializers
+from serializers import *
+
+# Facades
+from facades import *
 
 # Routes
 @app.route('/')
@@ -37,6 +51,22 @@ app.add_url_rule(
         graphiql = True
     )
 )
+
+@app.route('/search')
+def search():
+    type = request.args.get('type')
+    q = request.args.get('q')
+    payload = {
+        'key': os.environ['GOOGLE_BOOKS_KEY'],
+        'q': f'{type}{q}',
+        'maxResults': 5
+    }
+    search = SearchFacade(payload)
+    book_collection = search.books()
+    serializer = BookSerializer(many = True)
+    result = serializer.dump(book_collection)
+    return jsonify(result)
+
 
 if __name__ == '__main__':
      app.run()

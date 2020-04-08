@@ -19,12 +19,6 @@ Install Dependencies
 $ pip install -r requirements.txt
 ```
 
-Set Local Variables
-```
-$ export APP_SETTINGS="config.DevelopmentConfig"
-$ export DATABASE_URL="postgresql:///book_basket_dev"
-```
-
 Create/Migrate Database
 ```
 $ psql
