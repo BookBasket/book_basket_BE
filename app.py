@@ -24,13 +24,13 @@ seeder = FlaskSeeder()
 seeder.init_app(app, db)
 
 # Models
-from models import *
+# from models import *
 
 # Schema
-from schema import *
+import schema
 
 # POPOs
-from popos import *
+# from popos import *
 
 # Serializers
 from serializers import *
