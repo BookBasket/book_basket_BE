@@ -7,6 +7,10 @@ from flask_seeder import FlaskSeeder
 from flask_graphql import GraphQLView
 import json
 
+# dotenv
+from dotenv import load_dotenv
+load_dotenv()
+
 # app initialization
 app = Flask(__name__)
 
@@ -31,48 +35,35 @@ from popos import *
 # Serializers
 from serializers import *
 
+# Facades
+from facades import *
+
 # Routes
 @app.route('/')
 def index():
     return 'Welcome to Book Basket'
 
-    app.add_url_rule(
-        '/graphql',
-        view_func = GraphQLView.as_view(
-            'graphql',
-            schema = schema,
-            graphiql = True
-        )
+app.add_url_rule(
+    '/graphql',
+    view_func = GraphQLView.as_view(
+        'graphql',
+        schema = schema,
+        graphiql = True
     )
+)
 
 @app.route('/search')
 def search():
     payload = {
-        'key': 'AIzaSyDy_PYvNB25ePStZ4AgiSd8ZxIGcEpaZ4o',
+        'key': os.environ['GOOGLE_BOOKS_KEY'],
         'q': 'inauthor:george rr martin',
-        'maxResults': 40
+        'maxResults': 5
     }
-    response = requests.get('https://www.googleapis.com/books/v1/volumes', params = payload)
-    json_response = json.loads(response.content)
-    books = json_response['items']
-    book_collection = []
-    for book in books:
-        book_collection.append(Book(book))
-
+    search = SearchFacade(payload)
+    book_collection = search.books()
     serializer = BookSerializer(many = True)
     result = serializer.dump(book_collection)
     return jsonify(result)
-    # breakpoint()
-
-
-    # book = books[0]
-    # return jsonify(
-    #     title = book['volumeInfo']['title'],
-    #     author = book['volumeInfo']['authors'],
-    #     description = book['volumeInfo']['description'],
-    #     published_date = book['volumeInfo']['publishedDate'],
-    #     image_url = book['volumeInfo']['imageLinks']['thumbnail']
-    # )
 
 
 if __name__ == '__main__':
