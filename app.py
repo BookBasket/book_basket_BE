@@ -1,5 +1,5 @@
 # Dependencies
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 import os
 from flask_sqlalchemy import SQLAlchemy
 import requests
