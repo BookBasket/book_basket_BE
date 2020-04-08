@@ -7,3 +7,10 @@ script:
   - pytest
 notifications:
   email: false
+deploy:
+  provider: heroku
+  api_key:
+    secure: oWz0aeqc5FTSF7xS3+P3HmBO1sNJ/DXaJ4DU3Lr0ZOPq517d6wNSpnJUMLdmBPunS1Z16rAIDTleVsZoLfiasGKDhC2emNUG3TuJ9YSsLMvE4AYsr1X11J6+D0nchL1KdkEGjJkoNk1FOqpMNfVzflPAirmV7D/dHIVuVgYh0gp3uw7X2CpBqUdfBaE7UE1kg8AMuC5yMNe/n9hy2Ms0Z/sDtTFNyXA80eSPXYWQDnE0iSIiqH2Abl9Hn0V+iqITPs/yGnUXPycV9uadVMn4iNrvndQU5TdWknziIb5nygGeTKrPRDTYQlSAmoUEe0JODltpt3elZHOumCD8JI+ljRVx4k4/AO37l2HEEPqhXE9NS0/LYRAo1qm+dz+J9sKtr1NQn+BI8RGy3KGSjizJ3NR+Bbdrc/qGeZkgn0K8ShXjusfR9FxfaVTOP75fB10GGfhpqZKoCc98a3n/CsuvByD09q0QmNiPcrx+o95FKvDZlhHamXuDpvczWYL1W4jpuAYAH0nhjQhJblbHmOBIYYz525LDVodlK95zaVzltTKQWwGhLhw7bgdEHqw0obPlhrcVl/BF9qKn5fNLTDiVn0p2mgqBe2+3c03lJFap6MTMXWpHkIFrPTOT/xpPBBPWSpZhezGoQ3Q3r9IcGfPYb92o2hvdkMW7Y16HH/ya6VI=
+  app:
+    master: book-basket-be-staging
+    production: book-basket-be
