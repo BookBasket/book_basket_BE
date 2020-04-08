@@ -54,9 +54,11 @@ app.add_url_rule(
 
 @app.route('/search')
 def search():
+    type = request.args.get('type')
+    q = request.args.get('q')
     payload = {
         'key': os.environ['GOOGLE_BOOKS_KEY'],
-        'q': 'inauthor:george rr martin',
+        'q': f'{type}{q}',
         'maxResults': 5
     }
     search = SearchFacade(payload)
