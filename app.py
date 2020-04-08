@@ -60,7 +60,7 @@ def search():
     payload = {
         'key': os.environ['GOOGLE_BOOKS_KEY'],
         'q': f'{type}{q}',
-        'maxResults': 5
+        'maxResults': 40
     }
     search = SearchFacade(payload)
     book_collection = search.books()
