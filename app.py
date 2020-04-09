@@ -1,5 +1,5 @@
 # Dependencies
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, make_response
 import os
 from flask_sqlalchemy import SQLAlchemy
 import requests
@@ -53,21 +53,37 @@ app.add_url_rule(
     )
 )
 
-@app.route('/search')
+@app.route('/search', methods=['OPTIONS', 'GET'])
 def search():
-    type = request.args.get('type')
-    q = request.args.get('q')
-    payload = {
-        'key': os.environ['GOOGLE_BOOKS_KEY'],
-        'q': f'{type}{q}',
-        'maxResults': 40
-    }
-    search = SearchFacade(payload)
-    book_collection = search.books()
-    serializer = BookSerializer(many = True)
-    result = serializer.dump(book_collection)
-    return jsonify(result)
+    if request.method == 'OPTIONS':
+        return build_preflight_response()
+    elif request.method == 'GET':
+        req = request.get_json()
+        type = request.args.get('type')
+        q = request.args.get('q')
+        payload = {
+            'key': os.environ['GOOGLE_BOOKS_KEY'],
+            'q': f'{type}{q}',
+            'maxResults': 40
+        }
+        search = SearchFacade(payload)
+        book_collection = search.books()
+        serializer = BookSerializer(many = True)
+        result = serializer.dump(book_collection)
+        return build_actual_response(jsonify(result))
 
+
+def build_preflight_response():
+    response = make_response()
+    response.headers.add("Access-Control-Allow-Origin", "*")
+    response.headers.add('Access-Control-Allow-Headers', "*")
+    response.headers.add('Access-Control-Allow-Methods', "*")
+    return response
+
+
+def build_actual_response(response):
+    response.headers.add("Access-Control-Allow-Origin", "*")
+    return response
 
 if __name__ == '__main__':
      app.run()
