@@ -7,6 +7,11 @@ class BookModel(db.Model):
 
 	id = db.Column(db.Integer, primary_key = True)
 	title = db.Column(db.String())
+	summary = db.Column(db.String())
+	published_date = db.Column(db.String())
+	image_url = db.Column(db.String())
+	isbn = db.Column(db.String())
+
 	authors = db.relationship('AuthorModel', secondary='book_authors', backref=db.backref('books'))
 	genres = db.relationship('GenreModel', secondary='book_genres', backref=db.backref('books'))
 	shelves = db.relationship('ShelfModel', secondary='book_shelves', backref=db.backref('books'))

@@ -23,15 +23,9 @@ db = SQLAlchemy(app)
 seeder = FlaskSeeder()
 seeder.init_app(app, db)
 
-# Models
-# from models import *
-
 # Schema
 import schema
 from schema import *
-
-# POPOs
-# from popos import *
 
 # Serializers
 from serializers import *
@@ -62,9 +56,10 @@ def search():
         type = request.args.get('type')
         q = request.args.get('q')
         payload = {
-            'key': os.environ['GOOGLE_BOOKS_KEY'],
-            'q': f'{type}{q}',
-            'maxResults': 40
+            'key':          os.environ['GOOGLE_BOOKS_KEY'],
+            'q':            f'{type}{q}',
+            'maxResults':   40,
+            'printType':    'books'
         }
         search = SearchFacade(payload)
         book_collection = search.books()
