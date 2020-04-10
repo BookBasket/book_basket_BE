@@ -13,5 +13,8 @@ class TestApp(unittest.TestCase):
 		self.assertEqual(200, response.status_code)
 
 	def test_search_endpoint(self):
-		response = self.app.get('/search?type=inauthor:&q=george rr martin')
+		response = self.app.get('/search?type=author&q=george rr martin')
 		self.assertEqual(200, response.status_code)
+
+		json_data = json.loads(response.data)
+		self.assertEqual(40, len(json_data.get('data')))

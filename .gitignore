@@ -1,4 +1,4 @@
-# vs cdoe settings
+# vs code settings
 .vscode
 
 # env settings
@@ -9,3 +9,10 @@ env
 
 # pycache
 *.pyc
+
+# test coverage files
+.coverage
+htmlcov
+
+# trash
+.ds_store
