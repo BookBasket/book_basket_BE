@@ -1,18 +1,5 @@
 from marshmallow_jsonapi import Schema, fields
 
-class BookSerializer(Schema):
-    id = fields.String()
-    title = fields.String()
-    authors = fields.List(fields.String())
-    description = fields.String()
-    published_date = fields.String()
-    image_url = fields.String()
-    genres = fields.List(fields.String())
-
-    class Meta:
-        type_ = 'book'
-
-
 class AuthorSerializer(Schema):
     id = fields.String()
     name = fields.String()
@@ -27,3 +14,17 @@ class GenreSerializer(Schema):
 
     class Meta:
         type_ = 'genre'
+
+
+class BookSerializer(Schema):
+    id = fields.String()
+    title = fields.String()
+    description = fields.String()
+    published_date = fields.String()
+    image_url = fields.String()
+    authors = fields.Nested(AuthorSerializer(), many=True)
+    genres = fields.Nested(GenreSerializer(), many=True)
+
+    class Meta:
+        type_ = 'book'
+
