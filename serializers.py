@@ -3,11 +3,11 @@ from marshmallow_jsonapi import Schema, fields
 class BookSerializer(Schema):
     id = fields.String()
     title = fields.String()
-    authors = fields.Relationship(many = True)
+    authors = fields.String()
     description = fields.String()
     published_date = fields.String()
     image_url = fields.String()
-    genres = fields.Relationship(many = True)
+    genres = fields.String()
 
     class Meta:
         type_ = 'book'
