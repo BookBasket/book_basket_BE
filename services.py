@@ -22,9 +22,9 @@ class GoogleBooksService():
 
 		payload = {
 			'key':          os.environ['GOOGLE_BOOKS_KEY'],
-        	'q':            f'{type}{query}',
+			'q':            f'{type}{query}',
 			'maxResults':   40,
 			'printType':    'books'
-        }
+		}
 		response = requests.get('https://www.googleapis.com/books/v1/volumes', params = payload)
 		return json.loads(response.content)
