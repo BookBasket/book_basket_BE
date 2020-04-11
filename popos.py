@@ -9,7 +9,8 @@ class Genre:
 
 
 class Book:
-	def __init__(self, title, description, published_date, image_url, isbn, authors, genres):
+	def __init__(self, id, title, description, published_date, image_url, isbn, authors, genres):
+		self.id = id
 		self.title = title
 		self.description = description
 		self.published_date = published_date
@@ -22,6 +23,7 @@ class Book:
 	def from_google_response(cls, payload):
 		book_data = payload['volumeInfo']
 
+		id = payload['id']
 		title = book_data.setdefault('title', '')
 		description = book_data.setdefault('description', '')
 		published_date = book_data.setdefault('publishedDate', '')
@@ -44,4 +46,4 @@ class Book:
 		for genre in book_data.setdefault('categories', []):
 			genres.append(Genre(type=genre))
 
-		return cls(title, description, published_date, image_url, isbn, authors, genres)
+		return cls(id, title, description, published_date, image_url, isbn, authors, genres)

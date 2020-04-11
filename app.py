@@ -3,7 +3,6 @@ from flask import Flask, jsonify, request, make_response
 import os
 from flask_sqlalchemy import SQLAlchemy
 import requests
-from flask_seeder import FlaskSeeder
 from flask_graphql import GraphQLView
 import json
 from flask_bcrypt import Bcrypt
@@ -22,8 +21,6 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 
 # Modules
 db = SQLAlchemy(app)
-seeder = FlaskSeeder()
-seeder.init_app(app, db)
 bcrypt = Bcrypt(app)
 
 # Schema
