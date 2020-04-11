@@ -56,8 +56,8 @@ def search():
         return build_preflight_response()
     elif request.method == 'GET':
         req = request.get_json()
-        search = SearchFacade(request.args)
-        book_collection = search.books()
+        search = SearchFacade.from_query(request.args)
+        book_collection = search.books
         serializer = BookSerializer(many = True)
         result = serializer.dump(book_collection)
         return build_actual_response(jsonify(result))
