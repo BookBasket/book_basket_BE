@@ -9,22 +9,39 @@ class Genre:
 
 
 class Book:
-	def __init__(self, object):
-		self.title = object['volumeInfo'].setdefault('title', '')
-		self.description = object['volumeInfo'].setdefault('description', '')
-		self.published_date = object['volumeInfo'].setdefault('publishedDate', '')
+	def __init__(self, title, description, published_date, image_url, isbn, authors, genres):
+		self.title = title
+		self.description = description
+		self.published_date = published_date
+		self.isbn = isbn
+		self.image_url = image_url
+		self.authors = authors
+		self.genres = genres
 
-		if 'imageLinks' in object['volumeInfo']:
-			self.image_url = object['volumeInfo']['imageLinks'].setdefault('thumbnail', '')
+	@classmethod
+	def from_google_response(cls, payload):
+		book_data = payload['volumeInfo']
+
+		title = book_data.setdefault('title', '')
+		description = book_data.setdefault('description', '')
+		published_date = book_data.setdefault('publishedDate', '')
+
+		if 'industryIdentifiers' in book_data:
+			isbn = book_data['industryIdentifiers'][0].setdefault('identifier', '')
 		else:
-			self.image_url = ''
+			isbn = ''
 
-		self.author_list = object['volumeInfo'].setdefault('authors', [])
-		self.authors = []
-		for author in self.author_list:
-			self.authors.append(Author(name=author))
+		if 'imageLinks' in book_data:
+			image_url = book_data['imageLinks'].setdefault('thumbnail', '')
+		else:
+			image_url = ''
 
-		self.genre_list = object['volumeInfo'].setdefault('categories', [])
-		self.genres = []
-		for genre in self.genre_list:
-			self.genres.append(Genre(type=genre))
+		authors = []
+		for author in book_data.setdefault('authors', []):
+			authors.append(Author(name=author))
+
+		genres = []
+		for genre in book_data.setdefault('categories', []):
+			genres.append(Genre(type=genre))
+
+		return cls(title, description, published_date, image_url, isbn, authors, genres)

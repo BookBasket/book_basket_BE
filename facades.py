@@ -2,18 +2,16 @@ from services import *
 from popos import *
 
 class SearchFacade():
-	def	__init__(self, query):
+	def	__init__(self, query, books=[]):
 		self.id = None
 		self.query = query
+		self.books = books
 
+	@classmethod
+	def from_query(cls, query):
+		service = GoogleBooksService(query)
+		books = []
+		for book in service.get_json()['items']:
+			books.append(Book.from_google_response(book))
 
-	def books(self):
-		collection = []
-		for book in self.service().get_json()['items']:
-			collection.append(Book(book))
-
-		return collection
-
-
-	def	service(self):
-		return GoogleBooksService(self.query)
+		return cls(query, books)

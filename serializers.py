@@ -21,6 +21,7 @@ class BookSerializer(Schema):
     title = fields.String()
     description = fields.String()
     published_date = fields.String()
+    isbn = fields.String()
     image_url = fields.String()
     authors = fields.Nested(AuthorSerializer(), many=True)
     genres = fields.Nested(GenreSerializer(), many=True)
