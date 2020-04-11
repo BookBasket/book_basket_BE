@@ -6,6 +6,8 @@ import requests
 from flask_seeder import FlaskSeeder
 from flask_graphql import GraphQLView
 import json
+from flask_bcrypt import Bcrypt
+
 
 # dotenv
 from dotenv import load_dotenv
@@ -22,6 +24,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 db = SQLAlchemy(app)
 seeder = FlaskSeeder()
 seeder.init_app(app, db)
+bcrypt = Bcrypt(app)
 
 # Schema
 import schema

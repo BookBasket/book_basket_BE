@@ -1,6 +1,5 @@
-from app import db
+from app import db, bcrypt
 from sqlalchemy.dialects.postgresql import JSON
-from werkzeug.security import generate_password_hash, check_password_hash
 
 class UserModel(db.Model):
 	__tablename__ = 'users'
@@ -13,16 +12,16 @@ class UserModel(db.Model):
 
 	def __init__(self, payload):
 		self.email = payload.get('email')
-		self.password_digest = generate_password_hash(payload.get('password'))
+		self.password_digest = bcrypt.generate_password_hash(payload.get('password'))
 
 	def __repr__(self):
 		return f'<User(id: {self.id}, email: {self.email})>'
 
 	def set_password(self, password):
-		self.password_digest = generate_password_hash(password)
+		self.password_digest = bcrypt.generate_password_hash(password)
 
 	def check_password(self, password):
-		return check_password_hash(self.password_digest, password)
+		return bcrypt.check_password_hash(self.password_digest, password)
 
 
 class BookModel(db.Model):
