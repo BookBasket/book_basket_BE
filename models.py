@@ -1,5 +1,27 @@
-from app import db
+from app import db, bcrypt
 from sqlalchemy.dialects.postgresql import JSON
+
+class UserModel(db.Model):
+	__tablename__ = 'users'
+
+	id = db.Column(db.Integer, primary_key = True)
+	email = db.Column(db.String(), unique = True)
+	password_digest = db.Column(db.String())
+
+	shelves = db.relationship('ShelfModel', backref=db.backref('user'))
+
+	def __init__(self, payload):
+		self.email = payload.get('email')
+		self.password_digest = bcrypt.generate_password_hash(payload.get('password'))
+
+	def __repr__(self):
+		return f'<User(id: {self.id}, email: {self.email})>'
+
+	def set_password(self, password):
+		self.password_digest = bcrypt.generate_password_hash(password)
+
+	def check_password(self, password):
+		return bcrypt.check_password_hash(self.password_digest, password)
 
 
 class BookModel(db.Model):
@@ -54,6 +76,7 @@ class ShelfModel(db.Model):
 
 	id = db.Column(db.Integer, primary_key = True)
 	type = db.Column(db.String())
+	user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
 	def __init__(self, type):
 		self.type = type
@@ -63,18 +86,18 @@ class ShelfModel(db.Model):
 
 
 book_authors = db.Table('book_authors',
-			db.Column('book_id', db.Integer, db.ForeignKey('books.id')),
-			db.Column('author_id', db.Integer, db.ForeignKey('authors.id'))
-			)
+	db.Column('book_id', db.Integer, db.ForeignKey('books.id')),
+	db.Column('author_id', db.Integer, db.ForeignKey('authors.id'))
+	)
 
 
 book_genres = db.Table('book_genres',
-			db.Column('book_id', db.Integer, db.ForeignKey('books.id')),
-			db.Column('genre_id', db.Integer, db.ForeignKey('genres.id'))
-			)
+	db.Column('book_id', db.Integer, db.ForeignKey('books.id')),
+	db.Column('genre_id', db.Integer, db.ForeignKey('genres.id'))
+	)
 
 
 book_shelves = db.Table('book_shelves',
-			db.Column('book_id', db.Integer, db.ForeignKey('books.id')),
-			db.Column('shelf_id', db.Integer, db.ForeignKey('shelves.id'))
-			)
+	db.Column('book_id', db.Integer, db.ForeignKey('books.id')),
+	db.Column('shelf_id', db.Integer, db.ForeignKey('shelves.id'))
+	)
