@@ -88,7 +88,7 @@ def create_book():
         isbn = params.get('isbn')
         published_date = params.get('published_date')
 
-        book = BookModel(title=title, summary=summary, image_url=image_url, isbn=isbn, published_date=published_date, authors=authors, genres=[genre], shelves=[shelf])
+        book = BookModel(title=title, summary=summary, image_url=image_url, isbn=isbn, published_date=published_date, authors=authors, genres=genres, shelves=[shelf])
         db.session.add(book)
         db.session.commit()
         serializer = BookSerializer()
