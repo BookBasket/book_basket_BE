@@ -75,9 +75,12 @@ def create_book():
             db.session.add(author_object)
             authors.append(author_object)
 
-        genre_type = params.get('genre')
-        genre = GenreModel(type=genre_type)
-        db.session.add(genre)
+        genre_types = params.getlist('genre')
+        genres = []
+        for genre_type in genre_types:
+            genre_object = GenreModel(type=genre_type)
+            db.session.add(genre_object)
+            genres.append(genre_object)
 
         title = params.get('title')
         summary = params.get('summary')
