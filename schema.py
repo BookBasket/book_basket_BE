@@ -43,30 +43,4 @@ class Query(graphene.ObjectType):
 	all_shelves = SQLAlchemyConnectionField(ShelfObject)
 
 
-# class CreateBook(graphene.Mutation):
-#     class Arguments:
-#         title = graphene.String(required=True)
-#         summary = graphene.String(required=True)
-#         published_date = graphene.String(required=True)
-#         image_url = graphene.String(required=True)
-#         isbn = graphene.String(required=True)
-# 		# summary = graphene.String(required=True)
-#         # published_date = graphene.String(required=True)
-#         # image_url = graphene.String(required=True)
-#         # isbn = graphene.String(required=True)
-#
-#     book = graphene.Field(lambda: BookObject)
-#
-#     def mutate(self, info, title, summary, published_date, image_url, isbn):
-#         book = BookModel(title=title, summary=summary, published_date=published_date, image_url=image_url, isbn=isbn)
-#         db.session.add(book)
-#         db.session.commit()
-#
-#         return CreateBook(book=book)
-#
-#
-# class Mutation(graphene.ObjectType):
-#     create_book = CreateBook.Field()
-
 schema = graphene.Schema(query=Query)
-# , mutation=Mutation)
