@@ -77,6 +77,12 @@ def create_book():
         genre = GenreModel(type=genre_type)
         db.session.add(genre)
 
+        title = params.get('title')
+        summary = params.get('summary')
+        image_url = params.get('image_url')
+        isbn = params.get('isbn')
+        published_date = params.get('published_date')
+
 
 
 def build_preflight_response():
