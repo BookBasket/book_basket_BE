@@ -64,11 +64,18 @@ def create_book():
     if request.method == 'OPTIONS':
         return build_preflight_response()
     elif request.method == 'POST':
-        req = request.get_json()
+        # req = request.get_json()
 
         params = request.args
         shelf_id = params.get(shelf_id)
         shelf = Shelves.query.filter_by(id=shelf_id)
+
+        # authors = params.get(authors)
+        # for author in authors
+        #     Author(name=author.name)
+        #
+        #
+        # params.get(genre)
 
         title = params.get(title)
         summary = params.get(summary)
@@ -79,8 +86,6 @@ def create_book():
         book = BookModel(title=title, summary=summary, image_url=image_url, isbn=isbn, published_date=published_date)
         shelf.books.append(book)
 
-        params.get(author)
-        params.get(genre)
         # shelf = Shelves.query.filter_by(id=)
 
 
