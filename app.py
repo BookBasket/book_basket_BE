@@ -85,7 +85,8 @@ def create_book():
 
         book = BookModel(title=title, summary=summary, image_url=image_url, isbn=isbn, published_date=published_date, authors=[author], genres=[genre], shelves=[shelf])
 
-
+        db.session.add(book)
+        db.session.commit()
 
 
 def build_preflight_response():
