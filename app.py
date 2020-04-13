@@ -64,14 +64,16 @@ def create_book():
     if request.method == 'OPTIONS':
         return build_preflight_response()
     elif request.method == 'POST':
-
         params = request.args
         shelf_id = params.get('shelf_id')
         shelf = ShelfModel.query.filter_by(id=shelf_id).first()
 
-        author_name = params.get('author')
-        author = AuthorModel(name=author_name)
-        db.session.add(author)
+        author_names = params.getlist('author')
+        authors = []
+        for author_name in author_names:
+            author_object = AuthorModel(name=author_name)
+            db.session.add(author_object)
+            authors.append(author_object)
 
         genre_type = params.get('genre')
         genre = GenreModel(type=genre_type)
@@ -84,10 +86,8 @@ def create_book():
         published_date = params.get('published_date')
 
         book = BookModel(title=title, summary=summary, image_url=image_url, isbn=isbn, published_date=published_date, authors=[author], genres=[genre], shelves=[shelf])
-
         db.session.add(book)
         db.session.commit()
-
         serializer = BookSerializer()
         result = serializer.dump(book)
         return build_actual_response(jsonify(result))
