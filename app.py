@@ -73,6 +73,10 @@ def create_book():
         author = AuthorModel(name=author_name)
         db.session.add(author)
 
+        genre_type = params.get('genre')
+        genre = GenreModel(type=genre_type)
+        db.session.add(genre)
+
 
 
 def build_preflight_response():
