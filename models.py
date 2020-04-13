@@ -38,9 +38,6 @@ class BookModel(db.Model):
 	genres = db.relationship('GenreModel', secondary='book_genres', backref=db.backref('books'))
 	shelves = db.relationship('ShelfModel', secondary='book_shelves', backref=db.backref('books'))
 
-	def __init__(self, title):
-		self.title = title
-
 	def __repr__(self):
 		return f'<Book(id: {self.id}, title: {self.title})>'
 
@@ -50,9 +47,6 @@ class AuthorModel(db.Model):
 
 	id = db.Column(db.Integer, primary_key = True)
 	name = db.Column(db.String())
-
-	def __init__(self, name):
-		self.name = name
 
 	def __repr__(self):
 		return f'<Author(id: {self.id}, name: {self.name})>'
@@ -64,9 +58,6 @@ class GenreModel(db.Model):
 	id = db.Column(db.Integer, primary_key = True)
 	type = db.Column(db.String())
 
-	def __init__(self, type):
-		self.type = type
-
 	def __repr__(self):
 		return f'<Genre(id: {self.id}, type: {self.type})>'
 
@@ -77,9 +68,6 @@ class ShelfModel(db.Model):
 	id = db.Column(db.Integer, primary_key = True)
 	type = db.Column(db.String())
 	user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-
-	def __init__(self, type):
-		self.type = type
 
 	def __repr__(self):
 		return f'<Shelf(id: {self.id}, type: {self.type})>'
