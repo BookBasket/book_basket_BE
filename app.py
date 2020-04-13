@@ -88,7 +88,7 @@ def create_book():
         db.session.add(book)
         db.session.commit()
 
-        serializer = BookSerializer(many = True)
+        serializer = BookSerializer()
         result = serializer.dump(book)
         return build_actual_response(jsonify(result))
 
