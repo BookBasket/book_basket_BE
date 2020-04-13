@@ -5,12 +5,26 @@ from models import *
 db.drop_all()
 db.create_all()
 
-# Shelves
-shelf1 = ShelfModel(type='already_read')
-db.session.add(shelf1)
+payload = {
+	'email': 'fake@mail.com',
+	'password': 'password'
+}
 
-shelf2 = ShelfModel(type='to_read')
-db.session.add(shelf2)
+jomah = UserModel(payload=payload)
+db.session.add(jomah)
+
+# Shelves
+already_read = ShelfModel(
+	type='already_read',
+	user=jomah
+)
+db.session.add(already_read)
+
+to_read = ShelfModel(
+	type='to_read',
+	user=jomah
+)
+db.session.add(to_read)
 
 
 # Authors
@@ -31,6 +45,7 @@ db.session.add(vonnegut)
 
 wilde = AuthorModel(name='Oscar Wilde')
 db.session.add(wilde)
+
 
 # Genres
 fiction = GenreModel(type='fiction')
@@ -63,7 +78,8 @@ book1 = BookModel(
 	image_url='https://images-na.ssl-images-amazon.com/images/I/91dSMhdIzTL.jpg',
 	isbn='0553103547',
 	authors=[grrm],
-	genres=[fiction, fantasy]
+	genres=[fiction, fantasy],
+	shelves=[already_read]
 )
 db.session.add(book1)
 
@@ -73,7 +89,8 @@ book2 = BookModel(
 	published_date='2000',
 	image_url='https://images-na.ssl-images-amazon.com/images/I/91Nl6NuijHL.jpg',isbn='0553579908',
 	authors=[grrm],
-	genres=[fiction, fantasy]
+	genres=[fiction, fantasy],
+	shelves=[already_read]
 )
 db.session.add(book2)
 
@@ -84,7 +101,8 @@ book3 = BookModel(
 	isbn='0553106635',
     image_url='https://images-na.ssl-images-amazon.com/images/I/91dlztjGOHL.jpg',
 	authors=[grrm],
-	genres=[fiction, fantasy]
+	genres=[fiction, fantasy],
+	shelves=[already_read]
 )
 db.session.add(book3)
 
@@ -95,7 +113,8 @@ book4 = BookModel(
 	isbn='9780553582024',
     image_url='https://images-na.ssl-images-amazon.com/images/I/81MylCMYnVL.jpg',
 	authors=[grrm],
-	genres=[fiction, fantasy]
+	genres=[fiction, fantasy],
+	shelves=[already_read]
 )
 db.session.add(book4)
 
@@ -106,7 +125,8 @@ book5 = BookModel(
 	isbn='9780553582017',
     image_url='https://images-na.ssl-images-amazon.com/images/I/81e1rZDeBBL.jpg',
 	authors=[grrm],
-	genres=[fiction, fantasy]
+	genres=[fiction, fantasy],
+	shelves=[already_read]
 )
 db.session.add(book5)
 
@@ -117,7 +137,8 @@ book6 = BookModel(
 	isbn='0060730552',
     image_url='https://static.metacritic.com/images/products/movies/8/53b03fab6ead4ac3160e5e633715d94b.jpg',
 	authors=[simpson],
-	genres=[non_fiction, adventure]
+	genres=[non_fiction, adventure],
+	shelves=[to_read]
 )
 db.session.add(book6)
 
@@ -128,7 +149,8 @@ book7 = BookModel(
 	isbn='0385486804',
     image_url='https://images-na.ssl-images-amazon.com/images/I/811k9HNhaiL.jpg',
 	authors=[krakauer],
-	genres=[non_fiction, adventure]
+	genres=[non_fiction, adventure],
+	shelves=[to_read]
 )
 db.session.add(book7)
 
@@ -139,7 +161,8 @@ book8 = BookModel(
 	isbn='9780553582017',
     image_url='https://images-na.ssl-images-amazon.com/images/I/81wLeKWJmrL.jpg',
 	authors=[krakauer],
-	genres=[non_fiction, adventure]
+	genres=[non_fiction, adventure],
+	shelves=[to_read]
 )
 db.session.add(book8)
 
@@ -150,7 +173,8 @@ book9 = BookModel(
 	isbn='9780451524935',
     image_url='https://lh3.googleusercontent.com/proxy/G4pOc4cbm7FXGomixYIX6aHgqM1l0FdgZ_yP67XGqMRCq08lye2KXewmtf73Kg22dOwNkGzHw2dTzWRp2FOqpO-V_4gk3kDemkJbVbqRmlapiA0yb_mM07uMAXHMOSy_gH-0pA',
 	authors=[orwell],
-	genres=[fiction, dystopian]
+	genres=[fiction, dystopian],
+	shelves=[to_read]
 )
 db.session.add(book9)
 
@@ -161,7 +185,8 @@ book10 = BookModel(
 	isbn='0812988523',
     image_url='https://images-na.ssl-images-amazon.com/images/I/71QcX1DbklL.jpg',
 	authors=[vonnegut],
-	genres=[fiction, science_fiction, satire]
+	genres=[fiction, science_fiction, satire],
+	shelves=[to_read]
 )
 db.session.add(book10)
 
