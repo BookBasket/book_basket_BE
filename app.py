@@ -79,9 +79,14 @@ def create_book():
             author_names = params.getlist('author')
             authors = []
             for author_name in author_names:
-                author_object = AuthorModel(name=author_name)
-                db.session.add(author_object)
-                authors.append(author_object)
+                author_object = db.session.query(AuthorModel).filter_by(name=author_name).first()
+                if author_object:
+                    authors.append(author_object)
+                else:
+                    created_author = AuthorModel(name=author_name)
+                    db.session.add(created_author)
+                    authors.append(created_author)
+
 
             genre_types = params.getlist('genre')
             genres = []
@@ -95,7 +100,6 @@ def create_book():
             image_url = params.get('image_url')
             isbn = params.get('isbn')
             published_date = params.get('published_date')
-
             book = BookModel(title=title, summary=summary, image_url=image_url, isbn=isbn, published_date=published_date, authors=authors, genres=genres, shelves=[shelf])
             db.session.add(book)
             db.session.commit()
