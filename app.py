@@ -123,6 +123,11 @@ def switch_shelves():
         shelf = db.session.query(ShelfModel).filter_by(id=1).first()
         book.shelves.append(shelf)
 
+        db.session.commit()
+        serializer = BookSerializer()
+        result = serializer.dump(book)
+        return build_actual_response(jsonify(result))
+
 
 def build_preflight_response():
     response = make_response()
