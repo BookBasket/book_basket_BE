@@ -112,6 +112,18 @@ def create_book():
             return build_actual_response(jsonify(result))
 
 
+@app.route('/switch_shelves', methods=['OPTIONS', 'PATCH'])
+def switch_shelves():
+    if request.method == 'OPTIONS':
+        return build_preflight_response()
+    elif request.method == 'PATCH':
+        isbn = request.args.get('isbn')
+        book = db.session.query(BookModel).filter_by(isbn=isbn).first()
+        book.shelves.pop(0)
+        shelf = db.session.query(ShelfModel).filter_by(id=1).first()
+        book.shelves.append(shelf)
+
+
 def build_preflight_response():
     response = make_response()
     response.headers.add("Access-Control-Allow-Origin", "*")
