@@ -59,6 +59,42 @@ def search():
         result = serializer.dump(book_collection)
         return build_actual_response(jsonify(result))
 
+@app.route('/create_book', methods=['OPTIONS', 'POST'])
+def create_book():
+    if request.method == 'OPTIONS':
+        return build_preflight_response()
+    elif request.method == 'POST':
+        params = request.args
+        shelf_id = params.get('shelf_id')
+        shelf = ShelfModel.query.filter_by(id=shelf_id).first()
+
+        author_names = params.getlist('author')
+        authors = []
+        for author_name in author_names:
+            author_object = AuthorModel(name=author_name)
+            db.session.add(author_object)
+            authors.append(author_object)
+
+        genre_types = params.getlist('genre')
+        genres = []
+        for genre_type in genre_types:
+            genre_object = GenreModel(type=genre_type)
+            db.session.add(genre_object)
+            genres.append(genre_object)
+
+        title = params.get('title')
+        summary = params.get('summary')
+        image_url = params.get('image_url')
+        isbn = params.get('isbn')
+        published_date = params.get('published_date')
+
+        book = BookModel(title=title, summary=summary, image_url=image_url, isbn=isbn, published_date=published_date, authors=authors, genres=genres, shelves=[shelf])
+        db.session.add(book)
+        db.session.commit()
+        serializer = BookSerializer()
+        result = serializer.dump(book)
+        return build_actual_response(jsonify(result))
+
 
 def build_preflight_response():
     response = make_response()

@@ -43,21 +43,4 @@ class Query(graphene.ObjectType):
 	all_shelves = SQLAlchemyConnectionField(ShelfObject)
 
 
-class CreateBook(graphene.Mutation):
-    class Arguments:
-        title = graphene.String(required=True)
-
-    book = graphene.Field(lambda: BookObject)
-
-    def mutate(self, info, title):
-        book = BookModel(title=title)
-        db.session.add(book)
-        db.session.commit()
-
-        return CreateBook(book=book)
-
-
-class Mutation(graphene.ObjectType):
-    create_book = CreateBook.Field()
-
-schema = graphene.Schema(query=Query, mutation=Mutation)
+schema = graphene.Schema(query=Query)
