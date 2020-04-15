@@ -73,8 +73,7 @@ def create_book():
             return build_actual_response(jsonify(result))
         else:
             params = request.args
-            shelf_id = params.get('shelf_id')
-            shelf = ShelfModel.query.filter_by(id=shelf_id).first()
+            shelf = ShelfModel.query.filter_by(id=2).first()
 
             author_names = params.getlist('author')
             authors = []
@@ -123,6 +122,7 @@ def switch_shelves():
         shelf = db.session.query(ShelfModel).filter_by(id=1).first()
         book.shelves.append(shelf)
 
+        db.session.add(book)
         db.session.commit()
         serializer = BookSerializer()
         result = serializer.dump(book)
