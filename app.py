@@ -65,7 +65,7 @@ def create_book():
     if book:
         serializer = BookSerializer()
         result = serializer.dump(book)
-        return build_actual_response(jsonify(result))
+        return jsonify(result)
     else:
         params = request.args
         shelf = ShelfModel.query.filter_by(id=2).first()
