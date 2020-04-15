@@ -5,13 +5,9 @@ from services import *
 from popos import *
 from flask_sqlalchemy import SQLAlchemy
 db = SQLAlchemy(app)
-# from app import db
-# from dotenv import load_dotenv
 from models import *
 app.config.from_object(os.environ['APP_SETTINGS'])
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
-# import schema
-# from schema import *
 
 class SearchFacade():
 	def	__init__(self, query, books=[]):
