@@ -73,6 +73,9 @@ def create_book():
             return build_actual_response(jsonify(result))
         else:
             params = request.args
+            shelf_id = params.get('shelf_id')
+            shelf = ShelfModel.query.filter_by(id=shelf_id).first()
+
             author_names = params.getlist('author')
             authors = []
             for author_name in author_names:
@@ -101,7 +104,6 @@ def create_book():
             image_url = params.get('image_url')
             isbn = params.get('isbn')
             published_date = params.get('published_date')
-            shelf = ShelfModel.query.filter_by(id=2).first()
             book = BookModel(title=title, summary=summary, image_url=image_url, isbn=isbn, published_date=published_date, authors=authors, genres=genres, shelves=[shelf])
             db.session.add(book)
             db.session.commit()
