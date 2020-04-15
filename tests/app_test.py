@@ -26,12 +26,12 @@ class TestApp(unittest.TestCase):
 		json_data = json.loads(response.data)
 		self.assertEqual(40, len(json_data.get('data')))
 
-	# def test_search_endpoint_with_isbn(self):
-	# 	response = self.app.get('/search?type=author&q=george rr martin')
-	# 	self.assertEqual(200, response.status_code)
-	#
-	# 	json_data = json.loads(response.data)
-	# 	self.assertEqual(40, len(json_data.get('data')))
+	def test_search_endpoint_with_isbn(self):
+		response = self.app.get('/search?type=isbn&q=0553103547')
+		self.assertEqual(200, response.status_code)
+
+		json_data = json.loads(response.data)
+		self.assertEqual(1, len(json_data.get('data')))
 	#
 	# def test_search_endpoint_with_genre(self):
 	# 	response = self.app.get('/search?type=author&q=george rr martin')
