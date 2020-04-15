@@ -1,6 +1,5 @@
 from flask import Flask
 app = Flask(__name__)
-import os
 from services import *
 from popos import *
 from flask_sqlalchemy import SQLAlchemy
