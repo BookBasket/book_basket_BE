@@ -22,6 +22,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 # Modules
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
+CORS(app)
 
 # Schema
 import schema
