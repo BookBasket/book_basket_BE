@@ -32,17 +32,13 @@ class TestApp(unittest.TestCase):
 
 		json_data = json.loads(response.data)
 		self.assertEqual(1, len(json_data.get('data')))
-	#
-	# def test_search_endpoint_with_genre(self):
-	# 	response = self.app.get('/search?type=author&q=george rr martin')
-	# 	self.assertEqual(200, response.status_code)
-	#
-	# 	json_data = json.loads(response.data)
-	# 	self.assertEqual(40, len(json_data.get('data')))
 
+	def test_search_endpoint_with_genre(self):
+		response = self.app.get('/search?type=genre&q=fiction')
+		self.assertEqual(200, response.status_code)
 
-
-
+		json_data = json.loads(response.data)
+		self.assertEqual(40, len(json_data.get('data')))
 
 	def test_create_book_endpoint(self):
 		response = self.app.post('/create_book?title=Testing3&author=J K Rowling&summary=This is a test&image_url=not_a_real_image.jpeg&isbn=0&published_date=May 7 2001&genre=fiction&genre=fantasy')
