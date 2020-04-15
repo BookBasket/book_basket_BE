@@ -34,7 +34,7 @@ class Book:
 			isbn = ''
 
 		if 'imageLinks' in book_data:
-			image_url = book_data['imageLinks'].setdefault('thumbnail', '')
+			image_url = book_data['imageLinks'].setdefault('thumbnail', 'https://i.imgur.com/yyYAL9I.png')
 		else:
 			image_url = ''
 
