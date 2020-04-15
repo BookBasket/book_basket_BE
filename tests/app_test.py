@@ -48,8 +48,8 @@ class TestApp(unittest.TestCase):
 		author_name = json_data['data']['attributes']['authors']['data'][0]['attributes']['name']
 		self.assertEqual(author_name, 'J K Rowling')
 
-	# def test_switch_shelves_endpoint(self):
-	# 	self.app.post('/create_book?title=Testing3&author=J K Rowling&summary=This is a test&image_url=not_a_real_image.jpeg&isbn=123456&published_date=May 7 2001&genre=fiction&genre=fantasy')
-	# 	response = self.app.patch('/switch_shelves?isbn=123456')
-	#
-	# 	self.assertEqual(200, response.status_code)
+	def test_switch_shelves_endpoint(self):
+		self.app.post('/create_book?title=Testing3&author=J K Rowling&summary=This is a test&image_url=not_a_real_image.jpeg&isbn=123456&published_date=May 7 2001&genre=fiction&genre=fantasy')
+		response = self.app.patch('/switch_shelves?isbn=123456')
+
+		self.assertEqual(200, response.status_code)
