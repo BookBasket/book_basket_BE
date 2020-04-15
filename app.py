@@ -60,22 +60,22 @@ def search():
         result = serializer.dump(book_collection)
         return build_actual_response(jsonify(result))
 
-@app.route('/create_book', methods=['OPTIONS', 'POST'])
+@app.route('/create_book', methods=['OPTIONS', 'GET'])
 def create_book():
     if request.method == 'OPTIONS':
         return build_preflight_response()
-    elif request.method == 'POST':
+    elif request.method == 'GET':
         book = CreateBookFacade.new_book(request.args)
         serializer = BookSerializer()
         result = serializer.dump(book)
         return build_actual_response(jsonify(result))
 
 
-@app.route('/switch_shelves', methods=['OPTIONS', 'PATCH'])
+@app.route('/switch_shelves', methods=['OPTIONS', 'GET'])
 def switch_shelves():
     if request.method == 'OPTIONS':
         return build_preflight_response()
-    elif request.method == 'PATCH':
+    elif request.method == 'GET':
         isbn = request.args.get('isbn')
         book = db.session.query(BookModel).filter_by(isbn=isbn).first()
         book.shelves.pop(0)
