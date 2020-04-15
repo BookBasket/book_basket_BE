@@ -22,3 +22,7 @@ class TestApp(unittest.TestCase):
 	def test_create_book_endpoint(self):
 		response = self.app.post('/create_book?title=Testing3&author=J K Rowling&summary=This is a test&image_url=not_a_real_image.jpeg&isbn=123456&published_date=May 7 2001&genre=fiction&genre=fantasy')
 		self.assertEqual(200, response.status_code)
+
+		json_data = json.loads(response.data)
+		author_name = json_data['data']['attributes']['authors']['data'][0]['attributes']['name']
+		self.assertEqual(author_name, 'J K Rowling')
