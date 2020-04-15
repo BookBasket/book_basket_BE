@@ -2,7 +2,7 @@ import unittest
 import requests
 import json
 from app import app
-from models import *
+# from models import *
 
 class TestApp(unittest.TestCase):
 	def setUp(self):
@@ -50,8 +50,8 @@ class TestApp(unittest.TestCase):
 		self.assertEqual(author_name, 'J K Rowling')
 
 	def test_create_book_endpoint_for_new_book(self):
-		book = BookModel.query.filter_by(isbn='12345').first()
-		db.session.delete(book)
+		# book = BookModel.query.filter_by(isbn='12345').first()
+		# db.session.delete(book)
 
 		response = self.app.post('/create_book?title=Testing3&author=J K Rowling&summary=This is a test&image_url=not_a_real_image.jpeg&isbn=12345&published_date=May 7 2001&genre=fiction&genre=fantasy')
 		self.assertEqual(200, response.status_code)
