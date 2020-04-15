@@ -6,7 +6,7 @@ import requests
 from flask_graphql import GraphQLView
 import json
 from flask_bcrypt import Bcrypt
-from flask_cors import CORS
+
 
 # dotenv
 from dotenv import load_dotenv
@@ -22,7 +22,6 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 # Modules
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
-CORS(app)
 
 # Schema
 import schema
