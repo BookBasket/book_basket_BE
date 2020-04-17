@@ -59,7 +59,7 @@ The backend database stores tables for the resources of books, authors, and genr
 To get a local copy up and running follow these simple steps.
 
 ### Installation
- 
+
 Requirements
 - Python 3.7.7
 - PSQL 11.5
@@ -106,6 +106,127 @@ $ npm run dev
 ```
 The backend server must be started first to allow the frontend to properly make API calls to the backend. Both servers must be running at the same time for the app to work locally.
 
+To interact with the GraphiQL interface: `https://book-basket-be.herokuapp.com/graphql`
+To make a request to the GraphQL endpoint:
+
+```javascript
+// For a single book node
+request = {
+  method: 'GET',
+	headers: {
+	  'Content-Type': 'application/json'
+	},
+	body: JSON.stringify({
+    "query": `{
+      book(id: "Qm9va09iamVjdDo2==") {
+        id
+        title
+        summary
+        publishedDate
+        isbn
+        imageUrl
+        genres {
+          edges {
+            node {
+              id
+              type
+            }
+          }
+        }
+        authors {
+          edges {
+            node {
+              id
+              name
+            }
+          }
+        }
+      }
+    }`
+	})
+}
+fetch(`https://book-basket-be.herokuapp.com/graphql`, request)
+```
+```sh
+# Response
+{
+  "data": {
+    "book": {
+      "id": "Qm9va09iamVjdDo2",
+      "title": "Touching the Void",
+      "summary": "Joe Simpson and his climbing partner, Simon Yates, had just reached the top of a 21,000-foot peak in the Andes when disaster struck. Simpson plunged off the vertical face of an ice ledge, breaking his leg. In the hours that followed, darkness fell and a blizzard raged as Yates tried to lower his friend to safety. Finally, Yates was forced to cut the rope, moments before he would have been pulled to his own death.",
+      "publishedDate": "1988",
+      "isbn": "0060730552",
+      "imageUrl": "https://static.metacritic.com/images/products/movies/8/53b03fab6ead4ac3160e5e633715d94b.jpg",
+      "genres": {
+        "edges": [
+          {
+            "node": {
+              "id": "R2VucmVPYmplY3Q6Mg=="
+              "type": "non-fiction"
+            }
+          },
+          {
+            "node": {
+              "id": "R2VucmVPYmplY3Q6NA=="
+              "type": "adventure"
+            }
+          }
+        ]
+      },
+      "authors": {
+        "edges": [
+          {
+            "node": {
+              "id": "QXV0aG9yT2JqZWN0OjI="
+              "name": "Joe Simpson"
+            }
+          }
+        ]
+      }
+    }
+  }
+}
+```
+
+For all nodes of a single resouce, pass this `"query"` into the body.
+* allBooks
+* allAuthors
+* allGenres
+* allShelves
+
+```javascript
+{
+  allBooks {
+    edges {
+      node {
+        id
+      }
+    }
+  }
+}
+```
+
+To make a request to the search endpoint:
+Valid types: `title`, `author`, `genre`, `isbn`
+```javascript
+fetch( `https://book-basket-be.herokuapp.com/search?type=${type}&q=${userInput}` )
+```
+
+To add a book to the user's to_read shelf
+```javascript
+let header = { method: "POST" };
+fetch(
+  `https://book-basket-be.herokuapp.com/create_book?author=${author_name}&genre=${genre_type}&title=${title}&isbn=${isbn}&published_date=${published_date}&summary=${description}&image_url=${image_url}`,
+  header
+)
+```
+
+To move a book from the to_read shelf to the already_read shelf:
+```javascript
+let header = { method: 'PATCH' };
+fetch( `https://book-basket-be.herokuapp.com/switch_shelves?isbn=${isbn}`, header )
+```
 
 
 <!-- ROADMAP -->
@@ -125,7 +246,9 @@ See the [open issues](https://github.com/BookBasket/book_basket_BE/issues) for a
 ## Next Steps
 
 * Research and solve the issue of [mixed content](https://developers.google.com/web/fundamentals/security/prevent-mixed-content/what-is-mixed-content)
-* Include functionality to switch a book from "to read" shelf to "already read" shelf. This works for some books but not for all, so it is not included in this iteration.
+* Improve functionality to switch a book from "to read" shelf to "already read" shelf. This works for some books but not for all, so it is not included in this iteration.
+* Implement use functionality. Tables and password encryption for Users have been implemented, but no endpoint built out to utilize them.
+* Utilize GraphQL mutations to modify the database
 
 <!-- CONTRIBUTORS -->
 ## Contributors
